@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background: #f4f4f4; }
+        header { background: #128C7E; color: white; padding: 1rem; text-align: center; border-radius: 8px; }
+        main { background: white; padding: 20px; margin-top: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        a { color: #128C7E; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ title }}</h1>
+    </header>
+    <main>
+        {{ content | safe }}
+    </main>
+    <footer style="text-align: center; margin-top: 20px; color: #666;">
+        <p>&copy; 2026 我的导航站</p>
+    </footer>
+</body>
+</html>
