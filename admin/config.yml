@@ -2,7 +2,7 @@ backend:
   name: github
   repo: zhutou369/ws123
   branch: main
-  base_url: https://你的Worker名字.workers.dev
+  base_url: https://ws-auth-gate.zhutou757.workers.dev
   auth_endpoint: auth
 
 media_folder: "assets/images"
@@ -16,5 +16,6 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "文章标题", name: "title", widget: "string"}
-      - {label: "发布日期", name: "date", widget: "datetime"}
+      - {label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "正文内容", name: "body", widget: "markdown"}
+      - {label: "布局", name: "layout", widget: "hidden", default: "layout.njk"}
