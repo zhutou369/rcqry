@@ -1,12 +1,11 @@
 backend:
   name: github
-  repo: zhutou369/ws123
+  repo: zhutou369/ws123 # 请确保这是你的仓库名
   branch: main
-  base_url: https://ws-auth-gate.zhutou757.workers.dev
-  auth_endpoint: auth
+  base_url: https://ws-auth-gate.zhutou757.workers.dev # 你的Worker地址
 
-media_folder: "assets/images"
-public_folder: "/assets/images"
+media_folder: "assets/img"
+public_folder: "/assets/img"
 
 collections:
   - name: "blog"
@@ -17,6 +16,6 @@ collections:
     fields:
       - {label: "文章标题", name: "title", widget: "string"}
       - {label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
-      - {label: "标签", name: "tags", widget: "hidden", default: "blog"} # 添加这一行
       - {label: "正文内容", name: "body", widget: "markdown"}
+      - {label: "标签", name: "tags", widget: "hidden", default: "blog"}
       - {label: "布局", name: "layout", widget: "hidden", default: "layout.njk"}
