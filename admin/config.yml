@@ -13,8 +13,8 @@ collections:
     label: "文章发布"
     folder: "posts"
     create: true
-    # 这一行是命根子：必须包含时分秒，否则同名标题的文章会互相覆盖
-    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}-{{slug}}"
+    # 强制文件名包含完整时间戳+文章标题，防止任何形式的覆盖
+    slug: "{{year}}{{month}}{{day}}-{{hour}}{{minute}}{{second}}-{{slug}}"
     fields:
       - {label: "文章标题", name: "title", widget: "string"}
       - {label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss"}
