@@ -87,14 +87,14 @@
             <div class="feed-section">
                 <h3 class="feed-title">最新资讯动态</h3>
 <div class="feed-list">
-    {% for post in collections.blog | reverse %}
+    {%- for post in collections.blog | reverse -%}
     <a href="{{ post.url }}" class="article-item">
         <div class="article-content-wrapper">
             <h2 class="article-title">{{ post.data.title }}</h2>
             <span class="time-label">{{ post.date | date: "%Y-%m-%d" }}</span>
         </div>
     </a>
-    {% endfor %}
+    {%- endfor -%}
 </div>
 
                 {% if collections.blog.length == 0 %}
