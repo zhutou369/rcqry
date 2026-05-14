@@ -75,7 +75,7 @@
 
     <article class="post-container">
         <h1>{{ title }}</h1>
-        <div class="article-meta">发布日期：{{ date | dateFilter }}</div>
+        <div class="article-meta">发布日期：{{ date.toLocaleDateString('zh-CN') }}</div>
         
         <div class="article-body">
             {{ content | safe }}
