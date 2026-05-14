@@ -75,7 +75,7 @@
 
     <article class="post-container">
         <h1>{{ title }}</h1>
-        <div class="article-meta">发布日期：{{ date.toLocaleDateString('zh-CN') }}</div>
+        <div class="article-meta">{% if date %}发布日期：{{ date.getFullYear() }}-{{ (date.getMonth()+1).toString().padStart(2, '0') }}-{{ date.getDate().toString().padStart(2, '0') }}{% endif %}</div>
         
         <div class="article-body">
             {{ content | safe }}
