@@ -96,23 +96,18 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全与效率手
 </div>
 
     <aside class="sidebar">
-        <div class="widget-title">最新资讯更新</div>
-        <ul class="post-list">
-            {%- for post in collections.blog | reverse -%}
-            <a href="{{ post.url }}" class="article-item">
-                <div class="article-content-wrapper">
-                    <h2 class="article-title">{{ post.data.title }}</h2>
-                </div>
-            </a>
-            {%- endfor -%}
+    <div class="widget-title">最新资讯更新</div>
+    <ul class="post-list">
+        {# 注意：关键词两边必须有空格 #}
+        {% for post in collections.blog | reverse %}
+            <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
+        {% else %}
             <li><a href="#">2026年 WhatsApp官方 安全白皮书发布</a></li>
             <li><a href="#">如何解决 WhatsApp在线登陆 出现的黑屏问题</a></li>
             <li><a href="#">whatapp web 独立模式开启教程</a></li>
-            <li><a href="#">whats官方网页版 与第三方插件的兼容性测试</a></li>
-            <li><a href="#">全球跨境从业者必看：whatsapp网页版登录 安全手册</a></li>
-            {% endfor %}
-        </ul>
-    </aside>
+        {% endfor %}
+    </ul>
+</aside>
 </div>
 
 <footer class="footer">
