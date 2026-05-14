@@ -1,9 +1,3 @@
----
-layout: layout.njk
-title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
-# 如果一定要显示日期，请加上这一行：
-
----
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -56,10 +50,6 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
     <h1>hatsapp网页版登录的安全性</h1>
 </header>
 
----
-layout: layout.njk
-title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全与效率手册"
----
 
 <div class="container">
     <main class="main-article">
