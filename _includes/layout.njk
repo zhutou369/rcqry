@@ -61,32 +61,17 @@
 <body>
 
     <article class="post-container">
-        <h1>{{ title }}</h1>
-        
-        <div class="post-content">
-            {{ content | safe }}
-        </div>
-
-        <nav class="post-pagination">
-            {%- set previousPost = collections.blog | getPreviousCollectionItem(page) %}
-            {%- set nextPost = collections.blog | getNextCollectionItem(page) %}
-
-            {%- if previousPost %}
-            <a href="{{ previousPost.url }}" class="pagination-item prev">
-                <span class="pagination-label">← 上一篇</span>
-                <span class="pagination-title">{{ previousPost.data.title }}</span>
-            </a>
-            {% else %}
-            <div class="pagination-item" style="visibility: hidden;"></div>
-            {%- endif %}
-
-            {%- if nextPost %}
-            <a href="{{ nextPost.url }}" class="pagination-item next">
-                <span class="pagination-label">下一篇 →</span>
-                <span class="pagination-title">{{ nextPost.data.title }}</span>
-            </a>
-            {%- endif %}
-        </nav>
+    <main class="card">
+    <h1>{{ title }}</h1>
+    <div class="article-meta">发布日期：{{ date | dateFilter }}</div>
+    <div class="article-body">
+        {{ content | safe }}
+    </div>
+    <div class="nav-links">
+        {% if prevPost %}<a href="{{ prevPost.url }}">上一篇：{{ prevPost.data.title }}</a>{% endif %}
+        {% if nextPost %}<a href="{{ nextPost.url }}">下一篇：{{ nextPost.data.title }}</a>{% endif %}
+    </div>
+</main>
         
         <div style="text-align: center; margin-top: 40px;">
             <a href="/" style="color: #666; text-decoration: none;">返回首页</a>
