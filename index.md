@@ -98,7 +98,7 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
 <footer class="footer">
     <div class="friend-links" id="link-pool">
             友情链接：
-            <a href="http://qhqrl.com" class="footer-link-item">whatsapp网页版登录</a> <a href="http://qhsdk.com" class="footer-link-item">WhatsApp web</a> <a href="http://qvfdc.com" class="footer-link-item">whatsapp网页版</a> <a href="http://rcqry.com" class="footer-link-item">whatsapp网页版登入</a> <a href="http://rdqjm.com" class="footer-link-item">whatsapp官方</a>
+            <a href="https://qhqrl.com" class="footer-link-item">whatsapp网页版登录</a> <a href="https://ctysd.cn" class="footer-link-item">WhatsApp web</a> <a href="https://qvfdc.com" class="footer-link-item">whatsapp网页版</a> <a href="https://rcqry.com" class="footer-link-item">whatsapp网页版登入</a> <a href="https://rdqjm.com" class="footer-link-item">whatsapp官方</a>
     </div>
     <p>&copy; 2026 RCQRY.COM 版权所有 | 官方技术支持平台</p>
 </footer>
