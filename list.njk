@@ -1,7 +1,7 @@
 ---
 title: ws网页版登录
 layout: layout.njk
-# 🎯 修复点 3：专门为列表页补充独立的元描述摘要，避免由于继承而造成空置缺损
+# 🎯 修复点 3：补齐列表页专有的描述元数据，杜绝继承母版时产生空白或混乱
 description: "专业的 ws网页版登录 核心资讯大厅。为您实时聚合展示关于2026年WhatsApp多开策略、跨境防关联技术、官方最新升级公告等全量优质技术文章列表。"
 pagination:
   data: collections.blog
@@ -14,7 +14,7 @@ permalink: "blog/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber
 
 <main class="list-container" style="max-width: 900px; margin: 0 auto; padding: 10px 0;">
     
-    <h1 style="display: none;">{{ title }}资讯教程文章列表中心</h1>
+    <h1 style="display: none;">{{ title }}资讯中心文章列表</h1>
 
     {% if pagination.pageNumber > 0 %}
         <div style="color: #999; margin-bottom: 20px; font-size: 0.9rem;">
