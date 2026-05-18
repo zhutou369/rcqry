@@ -20,6 +20,12 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
         
         header { background: var(--main-green); color: white; padding: 40px 0; text-align: center; border-bottom: 4px solid var(--light-green); }
         header h1 { margin: 0; font-size: 28px; font-weight: 800; }
+        
+        /* 新增顶部导航样式 */
+        .top-nav { margin-top: 15px; font-size: 14px; }
+        .top-nav a { color: rgba(255, 255, 255, 0.8); text-decoration: none; margin: 0 10px; transition: 0.3s; }
+        .top-nav a:hover { color: var(--light-green); }
+        .top-nav span { color: rgba(255, 255, 255, 0.4); }
 
         .container { display: grid; grid-template-columns: 1fr 320px; gap: 30px; max-width: 1200px; margin: 30px auto; padding: 0 20px; align-items: start; }
 
@@ -37,6 +43,10 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
         .post-list li { border-bottom: 1px solid #f1f5f9; padding: 12px 0; }
         .post-list a { text-decoration: none; color: #334155; font-size: 15px; transition: 0.3s; }
         .post-list a:hover { color: var(--light-green); padding-left: 5px; }
+        
+        /* 新增侧边栏更多文章链接样式 */
+        .more-posts { display: block; margin-top: 15px; text-align: right; font-size: 14px; color: var(--main-green); text-decoration: none; font-weight: bold; }
+        .more-posts:hover { color: var(--light-green); }
 
         /* 站群随机友情链接 */
         .footer { background: white; margin-top: 60px; padding: 50px 20px; border-top: 1px solid #e2e8f0; text-align: center; }
@@ -53,7 +63,13 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
 <body>
 
 <header>
-    <h1>hatsapp网页版登录的安全性</h1>
+    <h1>WhatsApp网页版登录的安全性</h1>
+    <!-- 新增：顶部面包屑与列表页导航 -->
+    <div class="top-nav">
+        <a href="/">首页入口</a>
+        <span>/</span>
+        <a href="/posts/">文章列表</a>
+    </div>
 </header>
 
 
@@ -81,15 +97,22 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
     <aside class="sidebar">
         <div class="widget-title">最新资讯更新</div>
         <ul class="post-list">
-            {# 确保此处使用 Nunjucks 语法，且 collection 名称正确 #}
-            {% for post in collections.blog | reverse %}
-            <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
-            {% else %}
+                {% set count = 0 %}
+                {% for post in collections.blog | reverse %}
+                    {% if count < 5 %}
+                        <li>
+                            <a href="{{ post.url }}" class="post-item" title="{{ post.data.title }}">{{ post.data.title }}</a>
+                        </li>
+                        {% set count = count + 1 %}
+                    {% endif %}
+                {% else %}
             <li><a href="#">2026年安全白皮书：WhatsApp网页版登录 核心防护</a></li>
             <li><a href="#">如何解决 WhatsApp在线登陆 扫码失败问题</a></li>
             <li><a href="#">whatapp web 独立模式开启详细步骤</a></li>
             {% endfor %}
         </ul>
+        <!-- 新增：侧边栏底部的查看更多（文章列表）链接 -->
+        <a href="/posts/" class="more-posts">查看更多文章 »</a>
     </aside>
 </div>
 

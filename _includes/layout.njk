@@ -1,3 +1,6 @@
+---
+# 这里是你的 Front Matter 配置，母版会自动渲染
+---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -13,7 +16,8 @@
         .post-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 45px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); }
         
         header { text-align: center; margin-bottom: 30px; }
-        header a { color: var(--main-green); text-decoration: none; font-weight: bold; font-size: 1.2rem; }
+        header a { color: var(--main-green); text-decoration: none; font-weight: bold; font-size: 1.2rem; margin: 0 10px; }
+        header span { color: #ccc; }
 
         h1 { color: var(--main-green); border-bottom: 2px solid #eee; padding-bottom: 20px; font-size: 2rem; margin-top: 0; }
         .article-meta { color: #999; font-size: 0.9rem; margin-bottom: 30px; }
@@ -70,7 +74,11 @@
 <body>
 
     <header>
-        <div style="padding: 20px;"><a href="/">WhatsApp官方技术支持</a></div>
+        <div style="padding: 20px;">
+            <a href="/">WhatsApp官方技术支持</a>
+            <span>|</span>
+            <a href="/posts/" style="color: var(--accent-green);">文章列表</a>
+        </div>
     </header>
 
     <article class="post-container">
@@ -112,12 +120,12 @@
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 40px; padding-bottom: 20px;">
-            <a href="/" style="color: #999; text-decoration: none; font-size: 0.9rem;">返回首页入口</a>
+        <div style="text-align: center; margin-top: 40px; padding-bottom: 20px; font-size: 0.9rem;">
+            <a href="/" style="color: #999; text-decoration: none;">返回首页入口</a>
+            <span style="color: #ccc; margin: 0 10px;">•</span>
+            <a href="/posts/" style="color: var(--accent-green); text-decoration: none; font-weight: bold;">文章列表</a>
         </div>
     </article>
-
-
 
 </body>
 </html>

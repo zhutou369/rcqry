@@ -1,48 +1,43 @@
-module.exports = function(eleventyConfig) {
-  
-  // 1. 注册日期过滤器 (修复 dateFilter 报错)
-  eleventyConfig.addFilter("dateFilter", function(dateValue) {
-    if (!dateValue || !(dateValue instanceof Date)) {
-      return ""; // 如果没有日期，返回空字符串，不报错
-    }
-    return dateValue.getFullYear() + "-" + 
-           (dateValue.getMonth() + 1).toString().padStart(2, '0') + "-" + 
-           dateValue.getDate().toString().padStart(2, '0');
-  });
+module.exports = function (eleventyConfig) {
+  // 1. 强制拷贝静态资源（保证你站群的样式和公共图片不丢失）
+  eleventyConfig.addPassthroughCopy("static");
+  eleventyConfig.addPassthroughCopy("css");
+  eleventyConfig.addPassthroughCopy("images.txt");
 
-  // 2. 定义并增强 blog 集合逻辑 (支持上下页跳转)
-  eleventyConfig.addCollection("blog", function(collectionApi) {
-    // 获取 posts 文件夹下的所有 md 文件，并按日期升序排列
-    const posts = collectionApi.getFilteredByGlob("./posts/*.md").sort((a, b) => {
-      return a.date - b.date;
+  // 2. 核心修复：注册 blog 文章集合，并增加极致的时区与未来发布容错
+  eleventyConfig.addCollection("blog", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("posts/*.md").filter((item) => {
+      // 如果文章没有写日期，直接放行
+      if (!item.date) return true;
+      
+      // 获取当前时间的本地时间戳
+      const now = new Date();
+      
+      // 🌟 时区安全锁：即使 Gemini 生成的 UTC 日期跨天变成了“明天”
+      // 只要该文章日期不比当前时间晚 24 小时以上，就强制判定为“已发布”，绝不让它在前台失踪！
+      return item.date.getTime() <= now.getTime() + 24 * 60 * 60 * 1000;
     });
-
-    // 为每一篇文章手动绑定 prevPost 和 nextPost
-    for (let i = 0; i < posts.length; i++) {
-      const prevPost = posts[i - 1];
-      const nextPost = posts[i + 1];
-
-      // 将找到的关联文章存储到该文章的 data 属性中，供内页模板调用
-      posts[i].data.prevPost = prevPost;
-      posts[i].data.nextPost = nextPost;
-    }
-
-    return posts;
   });
 
-  // 3. 静态资源拷贝配置
-  eleventyConfig.addPassthroughCopy("ai1");
-  eleventyConfig.addPassthroughCopy("assets");
+  // 3. 注册标准的时间格式化过滤器（用于列表页和详情页优雅显示 yyyy-mm-dd）
+  eleventyConfig.addFilter("dateFilter", function (dateValue) {
+    if (!dateValue) return "";
+    const d = new Date(dateValue);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  });
 
-  // 4. 项目整体配置
+  // 4. 配置输入输出目录
   return {
     dir: {
-      input: ".",          // 设置根目录为输入
-      output: "_site",     // 设置输出目录
-      includes: "_includes" // 模板组件目录
+      input: ".",
+      includes: "_includes",
+      output: "_site",
     },
-    // 强制使用 Nunjucks 渲染，确保 {% for %} 等指令正常解析
+    templateFormats: ["md", "njk", "html"],
+    markdownTemplateEngine: "liquid",
     htmlTemplateEngine: "njk",
-    markdownTemplateEngine: "njk"
   };
 };
