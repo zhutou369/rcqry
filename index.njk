@@ -20,41 +20,33 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
         
         header { background: var(--main-green); color: white; padding: 40px 0; text-align: center; border-bottom: 4px solid var(--light-green); }
         header h1 { margin: 0; font-size: 28px; font-weight: 800; }
-        
-        /* 新增顶部导航样式 */
-        .top-nav { margin-top: 15px; font-size: 14px; }
-        .top-nav a { color: rgba(255, 255, 255, 0.8); text-decoration: none; margin: 0 10px; transition: 0.3s; }
-        .top-nav a:hover { color: var(--light-green); }
-        .top-nav span { color: rgba(255, 255, 255, 0.4); }
 
-        .container { display: grid; grid-template-columns: 1fr 320px; gap: 30px; max-width: 1200px; margin: 30px auto; padding: 0 20px; align-items: start; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
 
-        /* 左侧主文章区 */
-        .main-article { background: white; padding: 45px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        /* 主文章区 */
+        .main-article { background: white; padding: 45px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 30px; }
         .main-article h2 { color: var(--main-green); border-left: 5px solid var(--light-green); padding-left: 15px; margin: 40px 0 20px; font-size: 22px; }
         .main-article h3 { color: var(--text-dark); font-size: 18px; margin-top: 30px; }
         .main-article p { margin-bottom: 20px; text-indent: 2em; text-align: justify; font-size: 16px; color: #475569; }
         .article-img { width: 100%; border-radius: 8px; margin: 20px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
-        /* 右侧侧边栏 */
-        .sidebar { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        .widget-title { font-size: 18px; font-weight: bold; margin-bottom: 20px; color: var(--main-green); border-bottom: 2px solid var(--bg-gray); padding-bottom: 10px; }
+        /* 移到下方的最新资讯板块样式 */
+        .bottom-news { background: white; padding: 35px 45px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .widget-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: var(--main-green); border-bottom: 2px solid var(--bg-gray); padding-bottom: 10px; }
         .post-list { list-style: none; padding: 0; margin: 0; }
         .post-list li { border-bottom: 1px solid #f1f5f9; padding: 12px 0; }
-        .post-list a { text-decoration: none; color: #334155; font-size: 15px; transition: 0.3s; }
+        .post-list a { text-decoration: none; color: #334155; font-size: 15px; transition: 0.3s; display: block; }
         .post-list a:hover { color: var(--light-green); padding-left: 5px; }
         
-        /* 新增侧边栏更多文章链接样式 */
-        .more-posts { display: block; margin-top: 15px; text-align: right; font-size: 14px; color: var(--main-green); text-decoration: none; font-weight: bold; }
-        .more-posts:hover { color: var(--light-green); }
+        /* 查看更多文章链接样式 */
+        .more-posts { display: block; margin-top: 20px; text-align: center; font-size: 15px; color: var(--main-green); text-decoration: none; font-weight: bold; }
+        .more-posts:hover { color: var(--light-green); text-decoration: underline; }
 
         /* 站群随机友情链接 */
         .footer { background: white; margin-top: 60px; padding: 50px 20px; border-top: 1px solid #e2e8f0; text-align: center; }
         .friend-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 20px; }
         .friend-links a { text-decoration: none; color: #64748b; font-size: 14px; background: #f1f5f9; padding: 5px 15px; border-radius: 20px; transition: 0.3s; }
         .friend-links a:hover { background: var(--main-green); color: white; }
-
-        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
     </style>
 
     <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
@@ -64,16 +56,11 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
 
 <header>
     <h1>WhatsApp网页版登录的安全性</h1>
-    <!-- 新增：顶部面包屑与列表页导航 -->
-    <div class="top-nav">
-        <a href="/">首页入口</a>
-        <span>/</span>
-        <a href="/posts/">文章列表</a>
-    </div>
 </header>
 
 
 <div class="container">
+    <!-- 左侧主文章区 -->
     <main class="main-article">
         <article>
             <h1>2026年深度解析：whatsapp网页版登录 的安全性与跨境办公效能</h1>
@@ -94,7 +81,8 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
         </article>
     </main>
 
-    <aside class="sidebar">
+    <!-- 已移动到文章下方的最新资讯板块 -->
+    <section class="bottom-news">
         <div class="widget-title">最新资讯更新</div>
         <ul class="post-list">
                 {% set count = 0 %}
@@ -111,9 +99,9 @@ title: "WhatsApp网页版登录官方入口 - 2026跨境通讯安全手册"
             <li><a href="#">whatapp web 独立模式开启详细步骤</a></li>
             {% endfor %}
         </ul>
-        <!-- 新增：侧边栏底部的查看更多（文章列表）链接 -->
+        <!-- 查看更多文章链接：指向文章列表页 -->
         <a href="/posts/" class="more-posts">查看更多文章 »</a>
-    </aside>
+    </section>
 </div>
 
 
