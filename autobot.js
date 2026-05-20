@@ -19,7 +19,7 @@ async function runAutoBot() {
     // 2. 初始化 Gemini 客户端
     const ai = new GoogleGenAI({ apiKey: apiKey });
 
-    // 🛡️ 【高可用重构】带智能重试机制的 Gemini 內容生成闭包函数
+    // 🛡️ 【高可用重构】带智能重试机制的 Gemini 内容生成闭包函数
     async function generateContentWithRetry(prompt, maxRetries = 3, initialDelay = 5000) {
         let currentDelay = initialDelay;
         
@@ -52,7 +52,7 @@ async function runAutoBot() {
         }
     }
 
-    // 文件路径切回标准的 .json 格式
+    // 文件路径保持你原本的纯净根目录设计
     const jsonPath = path.join(__dirname, 'keywords.json');   
     const imagesPath = path.join(__dirname, 'images.txt'); 
     
@@ -124,7 +124,7 @@ async function runAutoBot() {
        图片链接 1：${selectedImages[0]}
        图片链接 2：${selectedImages[1]}
        
-       例如嵌入格式：![FinalShell 核心功能界面演示](${selectedImages[0]})
+       例如嵌入格式：![WhatsApp网页版登录功能演示](${selectedImages[0]})
             `;
         }
 
@@ -143,50 +143,4 @@ async function runAutoBot() {
     date: ${todayStr}
     tags: ["posts", "SEO"]
     layout: "layout.njk"
-    permalink: "/posts/${todayStr}-"你的纯英文短语"-${randomId}/index.html"
-    ---
-
-    【注意】：请务必将上面 permalink 里面的 "你的纯英文短语" 替换为你真正翻译出来的英文 Slug。不要保留引号。
-    ${imagePromptInstruction}
-
-    这里开始写文章正文。请多用二级标题（##）、三级标题（###）对内容进行多层级切分，保证极佳的SEO可读性与结构性。
-        `;
-
-        try {
-            console.log('正在连接 Gemini API 生产高质量内容...');
-            
-            // 🔥 【核心修改】替换为帶有防塞車、防限流重試機制的生成呼叫
-            const response = await generateContentWithRetry(prompt, 3, 5000);
-
-            const articleContent = response.text;
-            if (!articleContent) {
-                throw new Error("Gemini 返回内容为空");
-            }
-
-            // 为了防止同秒内生成的 randomId 撞车，加上 currentLoop 索引增加唯一性
-            const fileName = `${todayStr}-post-${randomId}-${currentLoop}.md`;
-            const outputDir = path.join(__dirname, 'posts'); 
-            if (!fs.existsSync(outputDir)) {
-                fs.mkdirSync(outputDir, { recursive: true });
-            }
-            
-            fs.writeFileSync(path.join(outputDir, fileName), articleContent, 'utf-8');
-            console.log(`✅ 第 ${currentLoop + 1} 篇文章已成功写入本地磁盘: posts/${fileName}`);
-
-        } catch (error) {
-            console.error(`❌ 第 ${currentLoop + 1} 篇文章生成遭遇错误:`, error.message);
-            // 如果某一篇失败了，把当前错过的词塞回去，防止词库无故丢失
-            keywords.unshift(currentTopic);
-        }
-    }
-
-    // 🌟 【重构重点】：当所有的循环（如5次）全部执行完毕完毕后，再一次性回写成标准的 JSON 数组格式
-    try {
-        fs.writeFileSync(jsonPath, JSON.stringify(keywords, null, 2), 'utf-8');
-        console.log(`\n📉 词库整体更新完毕！剩余可用关键词数: ${keywords.length}`);
-    } catch (e) {
-        console.error("❌ 回写 keywords.json 失败:", e.message);
-    }
-}
-
-runAutoBot();
+    permalink: "/posts/${todayStr}-"你的纯英文
