@@ -22,8 +22,8 @@
         header a { color: var(--main-green); text-decoration: none; font-weight: bold; font-size: 1.2rem; margin: 0 10px; }
         header span { color: #ccc; }
 
-        /* 🎯 这里的 h1 将会和具体生成文章内的 title 完美融合，成为内页全网唯一的 h1 */
-        h1 { color: var(--main-green); border-bottom: 2px solid #eee; padding-bottom: 20px; font-size: 2rem; margin-top: 0; }
+        /* 统一样式，确保无论谁渲染出来的 h1 视觉效果都完美一致 */
+        h1, .article-body h1 { color: var(--main-green); border-bottom: 2px solid #eee; padding-bottom: 20px; font-size: 2rem; margin-top: 0; margin-bottom: 20px; }
         .article-meta { color: #999; font-size: 0.9rem; margin-bottom: 30px; }
         
         .article-body { font-size: 1.1rem; color: #444; text-align: justify; }
@@ -59,7 +59,10 @@
     </header>
 
     <article class="post-container">
-        <h1>{{ title }}</h1>
+        {% if "<h1" not in content %}
+            <h1>{{ title }}</h1>
+        {% endif %}
+        
         <div class="article-meta">{% if date %}发布日期：{{ date.getFullYear() }}-{{ (date.getMonth()+1).toString().padStart(2, '0') }}-{{ date.getDate().toString().padStart(2, '0') }}{% endif %}</div>
         
         <div class="article-body">
