@@ -19,6 +19,39 @@ async function runAutoBot() {
     // 2. 初始化 Gemini 客户端
     const ai = new GoogleGenAI({ apiKey: apiKey });
 
+    // 🛡️ 【高可用重构】带智能重试机制的 Gemini 內容生成闭包函数
+    async function generateContentWithRetry(prompt, maxRetries = 3, initialDelay = 5000) {
+        let currentDelay = initialDelay;
+        
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                return await ai.models.generateContent({
+                    model: 'gemini-2.5-flash',
+                    contents: prompt,
+                });
+            } catch (error) {
+                // 兼容解析 SDK 可能返回的不同错误格式（状态码或错误描述文本）
+                const is503 = error.status === 503 || (error.message && error.message.includes('503'));
+                const is429 = error.status === 429 || (error.message && error.message.includes('429'));
+                
+                // 如果遇到 503 或 429 错误，并且还没超过最大重试次数，执行原地静默等待
+                if ((is503 || is429) && i < maxRetries - 1) {
+                    console.warn(`⚠️ [API 波动] 触发 ${is503 ? '503 伺服器拥塞' : '429 请求过多限流'}。`);
+                    console.warn(`💤 将在原地静默等待 ${currentDelay / 1000} 秒后进行第 ${i + 1} 次自动尝试...`);
+                    
+                    // 原地静默等待
+                    await new Promise(resolve => setTimeout(resolve, currentDelay));
+                    
+                    // 指数级退避延长下一次的等待时间（例如：5秒 -> 10秒 -> 20秒）
+                    currentDelay *= 2; 
+                    continue;
+                }
+                // 如果是其他致命错误（如 400 认证失效），或 3 次重试机会全部耗尽，则直接抛出异常
+                throw error;
+            }
+        }
+    }
+
     // 文件路径切回标准的 .json 格式
     const jsonPath = path.join(__dirname, 'keywords.json');   
     const imagesPath = path.join(__dirname, 'images.txt'); 
@@ -121,10 +154,9 @@ async function runAutoBot() {
 
         try {
             console.log('正在连接 Gemini API 生产高质量内容...');
-            const response = await ai.models.generateContent({
-                model: 'gemini-2.5-flash',
-                contents: prompt,
-            });
+            
+            // 🔥 【核心修改】替换为帶有防塞車、防限流重試機制的生成呼叫
+            const response = await generateContentWithRetry(prompt, 3, 5000);
 
             const articleContent = response.text;
             if (!articleContent) {
