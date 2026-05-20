@@ -134,7 +134,7 @@ async function runAutoBot() {
     
     【重要核心要求】：
     1. 请将本次的主题 "${currentTopic}" 翻译为一个干净、地道、用连字符隔开的【纯英文短语】，作为 URL 的别名（Slug）。
-    2. 字数严格控制在 1200 - 2000 字之间，多用结构化列表、二级标题（##）、三级标题（###）。
+    2. 字数严格控制在 1200 - 2000 字之间，多用结构化列表、二级标题（##）、三級标题（###）。
     3. 严格按以下 Markdown 格式输出头部元数据，禁止在最外层包含 \`\`\`markdown 包裹外壳，必须直接以 --- 开头：
 
     ---
@@ -143,4 +143,53 @@ async function runAutoBot() {
     date: ${todayStr}
     tags: ["posts", "SEO"]
     layout: "layout.njk"
-    permalink: "/posts/${todayStr}-"你的纯英文
+    permalink: "/posts/${todayStr}-"你的纯英文短语"-${randomId}/index.html"
+    ---
+
+    【注意】：请务必将上面 permalink 里面的 "你的纯英文短语" 替换为你真正翻译出来的英文 Slug。不要保留引号。
+    ${imagePromptInstruction}
+
+    5. ⚠️【特别限制】：严禁在正文的第一行或任何地方生成 # 标题（即一级的 <h1> 标签）。文章正文必须直接从第一个二级标题（##）或引导段落开始撰写，防止与母版外壳的标题产生 SEO 重复冲突。
+
+    这里开始写文章正文。请多用二级标题（##）、三级标题（###）对内容进行多层级切分，保证极佳的SEO可读性与结构性。
+        `;
+
+        try {
+            console.log('正在连接 Gemini API 生产高质量内容...');
+            
+            // 🔥 调用帶有 503/429 指数退避重试机值的闭包函数
+            const response = await generateContentWithRetry(prompt, 3, 5000);
+
+            const articleContent = response.text;
+            if (!articleContent) {
+                throw new Error("Gemini 返回内容为空");
+            }
+
+            // 为了防止同秒内生成的 randomId 撞车，加上 currentLoop 索引增加唯一性
+            const fileName = `${todayStr}-post-${randomId}-${currentLoop}.md`;
+            const outputDir = path.join(__dirname, 'posts'); 
+            if (!fs.existsSync(outputDir)) {
+                fs.mkdirSync(outputDir, { recursive: true });
+            }
+            
+            fs.writeFileSync(path.join(outputDir, fileName), articleContent, 'utf-8');
+            console.log(`✅ 第 ${currentLoop + 1} 篇文章已成功写入本地磁盘: posts/${fileName}`);
+
+        } catch (error) {
+            console.error(`❌ 第 ${currentLoop + 1} 篇文章生成遭遇错误:`, error.message);
+            // 如果某一篇遭遇不可抗力失败了，把当前错过的词還原塞回去，防止词库无故丢失
+            keywords.unshift(currentTopic);
+        }
+    }
+
+    // 🌟 当所有的循环全部执行完毕后，再一次性回写成标准的 JSON 数组格式
+    try {
+        fs.writeFileSync(jsonPath, JSON.stringify(keywords, null, 2), 'utf-8');
+        console.log(`\n📉 词库整体更新完毕！剩余可用关键词数: ${keywords.length}`);
+    } catch (e) {
+        console.error("❌ 回写 keywords.json 失败:", e.message);
+    }
+}
+
+// 🌟 核心修正：正確閉合 runAutoBot 函數本體，並執行調用
+runAutoBot();
